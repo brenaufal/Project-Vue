@@ -2,15 +2,17 @@
   <div id="app">
     <main class="layout">
       <div class="top-row">
+
+        <!-- Counter Card-->
         <section class="card counter-card">
           <h1>Counter</h1>
           <p>Count: {{ count }}</p>
           <div class="button-container">
             <button @click="decrementCount" aria-label="Decrement Count" class="counter-button">
-              &#8722; <!-- Minus sign -->
+              &#8722; <!-- Tanda Minus -->
             </button>
             <button @click="incrementCount" aria-label="Increment Count" class="counter-button">
-              &#43; <!-- Plus sign -->
+              &#43; <!-- Tanda Plus -->
             </button>
           </div>
           <div class="popcat-animation">
@@ -18,22 +20,25 @@
           </div>
         </section>
 
+        <!-- Title -->
         <div class="center-text">
           <h2>Vue App by Bren</h2>
         </div>
 
+        <!-- Colour Box -->
         <section class="card color-card">
-          <h2>Color Box</h2>
+          <h2>Colour Box</h2>
           <div :style="{ backgroundColor: boxColor }" class="color-box" aria-label="Color Box"></div>
           <div class="color-picker-container">
             <input type="color" v-model="boxColor" class="color-picker" aria-label="Pick Color"/>
             <button @click="changeColor" aria-label="Change Color">
-              Change Color
+              Change Colour
             </button>
           </div>
         </section>
       </div>
 
+      <!-- Carousel -->
       <section class="card carousel-card">
         <h2>Image Carousel</h2>
         <div class="carousel">
@@ -41,16 +46,13 @@
             :src="images[currentImage]" 
             :alt="`Carousel image ${currentImage + 1}`" 
             class="carousel-image"
-            @error="handleImageError"
-            v-if="!imageError"
           />
-          <p v-else>Error loading image</p>
           <div class="button-container carousel-buttons">
-            <button @click="prevImage" aria-label="Previous Image" class="arrow-button">
-              &#9664;
+            <button @click="prevImage" aria-label="Previous Image" class="carousel-button">
+              &#10094; <!-- Left Arrow key -->
             </button>
-            <button @click="nextImage" aria-label="Next Image" class="arrow-button">
-              &#9654;
+            <button @click="nextImage" aria-label="Next Image" class="carousel-button">
+              &#10095; <!-- Right Arrow Key -->
             </button>
           </div>
         </div>
@@ -76,12 +78,10 @@ export default {
         'https://plus.unsplash.com/premium_photo-1723058413328-40a64decb9d3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         'https://plus.unsplash.com/premium_photo-1722593856461-0adf92daf500?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         'https://images.unsplash.com/photo-1634998794483-1880151ebedf?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'https://plus.unsplash.com/premium_photo-1690957591806-95a2b81b1075?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         'https://static.wikia.nocookie.net/herofanon/images/b/ba/A64023B8-2C84-40F3-821F-31B27A6228AC.png'
       ],
       currentImage: 0,
       colors: ['#e0f7fa', '#c8e6c9', '#f8bbd0', '#ffcdd2'],
-      imageError: false,
       popcatImage: 'https://popcat.click/twitter-card.jpg', // Default image
       autoChangeInterval: null
     };
@@ -108,19 +108,14 @@ export default {
     },
     nextImage() {
       this.currentImage = (this.currentImage + 1) % this.images.length;
-      this.imageError = false;
     },
     prevImage() {
       this.currentImage = (this.currentImage - 1 + this.images.length) % this.images.length;
-      this.imageError = false;
-    },
-    handleImageError() {
-      this.imageError = true;
     },
     startAutoChange() {
       this.autoChangeInterval = setInterval(() => {
         this.nextImage();
-      }, 5000); // Change image every 5 seconds
+      }, 5000); // Ganti Gambar setiap 5 detik
     },
     stopAutoChange() {
       clearInterval(this.autoChangeInterval);
@@ -254,11 +249,6 @@ html, body {
   border-radius: 50%;
 }
 
-.color-picker::-moz-color-swatch {
-  border: none;
-  border-radius: 50%; /* Memastikan warna tetap berubah di firefox*/
-}
-
 .color-picker-container button {
   background-color: var(--color-button);
   color: #ffffff;
@@ -274,8 +264,29 @@ html, body {
   background-color: var(--color-button-hover);
 }
 
+.carousel-button {
+  font-size: 24px;
+  padding: 10px 15px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 .carousel {
   margin-top: 20px;
+  position: relative;
 }
 
 .carousel-image {
